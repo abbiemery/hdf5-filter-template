@@ -1,5 +1,14 @@
 /*
-* The passfilter HDf5 filter
+*   The passfilter HDf5 filter
+*
+*   This contains the basic header code to set up a filter.
+*   Its purpose is to act as a template for implementing
+*   compression algorithms in a hdf5 filter.
+*
+*   The "compression" that this filter applies just copies
+*   the data from the input buffer to an output buffer, does
+*   nothing then passes it back.
+*   
 */
 
 #ifndef PASSF_H5FILTER_H

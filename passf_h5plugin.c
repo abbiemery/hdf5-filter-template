@@ -1,5 +1,8 @@
 /*
-* Dynamically loaded filter plugin of HDF5 passfilter
+*   Dynamically loaded filter plugin
+*
+*   This is the code required to allow hdf5 to dynamicaly load
+*   the filter instead of registering it.
 */
 
 #include "passf_h5filter.h"

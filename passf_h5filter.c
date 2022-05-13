@@ -1,5 +1,20 @@
 /*
 *   The passfilter HDf5 filter
+*
+*   This contains the basic code to set up a filter, copy the data
+*   from the input buffer to an output buffer, do nothing, then
+*   pass it back.
+*   
+*   It's purpose is to act as a template for implementing
+*   compression algorithms in a hdf5 filter.
+*   
+*   Further considerations need to be made to use this for compression
+*   purposes. Such as allocating output buffersize, for decompression
+*   you need to allocate a larger output buffer, and vise versa for
+*   compression.
+*
+*   When compressing you might want to include further blocking.
+*   
 */
 
 #include "passfilter.h"
@@ -27,59 +42,62 @@ size_t H5Z_filter_passf(unsigned flags,size_t cd_nelmts,
                         size_t *buf_size,void**buf)
 {
 
-    void *outbuf = NULL;
-    size_t outbuflen, outdatalen;
+    void * outbuf = NULL;
+    size_t outbuf_size; /* size of output buffer */
     size_t ret_value;
 
     if (flags & H5Z_FLAG_REVERSE){
-        /** Decompress data.
-         **
-            ** This process is troublesome since the size of uncompressed data
-            ** is unknown, so the low-level interface must be used.
-            ** Data is decompressed to the output buffer (which is sized
-            ** for the average case); if it gets full, its size is doubled
-            ** and decompression continues.  This avoids repeatedly trying to
-            ** decompress the whole block, which could be really inefficient.
-            **/
+        /** Decompress data **/
+
+        /* prepare output buf*/
+        outbuf_size = (*buf_size);
+        if((outbuf == H5allocate_memory(outbuf_size, false))== NULL){
+            fprintf(stderr, "Memory allocation failed\n");
+            goto error;
+        }
         
+        /* decompress data */
+        ret_value = decompress(outbuf, outbuf_size, *buf, nbytes);
         
     } else {
-        /** Compress data.
-         **
-         ** This is quite simple, since the size of compressed data in the worst
-         ** case is known and it is not much bigger than the size of uncompressed
-         ** data.  This allows us to use the simplified one-shot interface to
-         ** compression.
-         **/
+        /** Compress **/
 
-
-        /* Get compression block size if present. */
-
-
-        /* Prepare the output buffer. */
-
-
-        /* Compress data. */
-
-
+        /* prepare output buf*/
+        outbuf_size = (*buf_size);
+        if((outbuf == H5allocate_memory(outbuf_size, false))== NULL){
+            fprintf(stderr, "Memory allocation failed\n");
+            goto error;
+        }
+        
+        /* compress data */
+        ret_value = compress(outbuf, outbuf_size, *buf, nbytes);
     }
 
+    /* replace the input buffer with the output buffer */
+    H5free_memory(*buf);
+    *buf = outbuf;
+    *buf_size = outbuf_size;
+    ret_value = outbuf_size;
+    outbuf = NULL;
+
+    if(outbuf)
+        H5free_memory(outbuf);
+    return ret_value;
+
+
+    error:
+        if(outbuf)
+            H5free_memory(outbuf);
+            outbuf = NULL;
+    return 0;
 }
 
 int passf_register_h5filter(void){
-
-    int retval;
-
-    retval = H5Zregister(H5Z_passf);
-    if(retval<0){
-        PUSH_ERR("passf_register_h5filter",
-                H5E_CANTREGISTER, "Can't register passfilter filter");
+        int retval;
+        retval = H5Zregister(H5Z_passf);
+        if(retval<0){
+            PUSH_ERR("passf_register_h5filter",
+                    H5E_CANTREGISTER, "Can't register passfilter filter");
+        }
+        return retval;
     }
-    return retval;
-}
-
-error:
-    if(outbuf)
-        H5free_memory(outbuf);
-        outbuf = NULL;
-  return 0;
