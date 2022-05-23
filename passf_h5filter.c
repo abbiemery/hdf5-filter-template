@@ -17,7 +17,6 @@
 *   
 */
 
-#include "passfilter.h"
 #include "passf_h5filter.h"
 
 #define PUSH_ERR(func, minor, str)                                      \

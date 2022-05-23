@@ -15,6 +15,7 @@
 #define PASSF_H5FILTER_H
 
 #include "hdf5.h"
+#include "passfilter.h"
 
 /* use an intiger greater than 256 to be id of the registered filter. */
 #define H5Z_FILTER_PASSF 3000
