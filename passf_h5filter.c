@@ -49,8 +49,8 @@ size_t H5Z_filter_passf(unsigned flags,size_t cd_nelmts,
         /** Decompress data **/
 
         /* prepare output buf*/
-        outbuf_size = (*buf_size);
-        if((outbuf == H5allocate_memory(outbuf_size, false))== NULL){
+        outbuf_size = *buf_size;
+        if((outbuf = H5allocate_memory(outbuf_size, false))== NULL){
             fprintf(stderr, "Memory allocation failed\n");
             goto error;
         }
@@ -62,8 +62,8 @@ size_t H5Z_filter_passf(unsigned flags,size_t cd_nelmts,
         /** Compress **/
 
         /* prepare output buf*/
-        outbuf_size = (*buf_size);
-        if((outbuf == H5allocate_memory(outbuf_size, false))== NULL){
+        outbuf_size = *buf_size;
+        if((outbuf = H5allocate_memory(outbuf_size, false))== NULL){
             fprintf(stderr, "Memory allocation failed\n");
             goto error;
         }
