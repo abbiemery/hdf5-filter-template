@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"hdf5.h": "c",
+			"h5public.h": "c",
+			"features.h": "c",
+			"cstdlib": "c",
+			"*.tcc": "c",
+			"memory": "c"
+		}
+	}
+}
