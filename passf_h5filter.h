@@ -18,7 +18,7 @@
 #include "passfilter.h"
 
 /* use an intiger greater than 256 to be id of the registered filter. */
-#define H5Z_FILTER_PASSF 3000
+#define H5Z_FILTER_PASSF 300
 
 const H5Z_class_t H5Z_passf[1];
 
