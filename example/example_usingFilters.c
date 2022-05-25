@@ -22,13 +22,12 @@
 
 #define FILE            "example_pass.h5"
 #define DATASET         "DS-pass"
-#define DIM0            32
-#define DIM1            64
-#define CHUNK0          4 
-#define CHUNK1          8 
+#define DIM0            5
+#define DIM1            10
+#define CHUNK0          1
+#define CHUNK1          10
 
-int
-main (void)
+int main (void)
 {
     hid_t           file, space, dset, dcpl;    /* Handles */
     herr_t          status;
@@ -72,8 +71,8 @@ main (void)
     space = H5Screate_simple (2, dims, NULL);
 
     /*
-     * Create the dataset creation property list, add the bzip2 
-     * compression filter and set the chunk size.
+     * Create the dataset creation property list, add the
+     * filter and set the chunk size.
      */
     dcpl = H5Pcreate (H5P_DATASET_CREATE);
     status = H5Pset_filter (dcpl, (H5Z_filter_t)H5Z_FILTER_PASSF, H5Z_FLAG_MANDATORY, (size_t)1, cd_values);
@@ -88,7 +87,7 @@ main (void)
      * Write the data to the dataset.
      */
     status = H5Dwrite (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT,
-                wdata[1]);
+                wdata);
 
     /*
      * Close and release resources.
@@ -134,7 +133,7 @@ main (void)
      * Read the data using the default properties.
      */
     status = H5Dread (dset, H5T_NATIVE_INT, H5S_ALL, H5S_ALL, H5P_DEFAULT,
-                rdata[0]);
+                rdata);
 
     /*
      * Find the maximum value in the dataset, to verify that it was
