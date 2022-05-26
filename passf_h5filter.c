@@ -56,7 +56,7 @@ size_t H5Z_filter_passf(unsigned flags,size_t cd_nelmts,
         }
         
         /* decompress data */
-        ret_value = decompress(outbuf, outbuf_size, *buf, nbytes);
+        ret_value = passf_decompress(outbuf, outbuf_size, *buf, nbytes);
         
     } else {
         /** Compress **/
@@ -69,7 +69,7 @@ size_t H5Z_filter_passf(unsigned flags,size_t cd_nelmts,
         }
         
         /* compress data */
-        ret_value = compress(outbuf, outbuf_size, *buf, nbytes);
+        ret_value = passf_compress(outbuf, outbuf_size, *buf, nbytes);
     }
 
     /* replace the input buffer with the output buffer */

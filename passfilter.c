@@ -13,9 +13,9 @@
 *   Return: 
 *   Success: Length of the output buffer
 */
-int compress(void* destination_buf, unsigned long destination_buf_length,
+int passf_compress(void* destination_buf, unsigned long destination_buf_length,
     void* source_buf,unsigned long nbytes){
-        
+
         memcpy(destination_buf, source_buf, nbytes);
         return destination_buf_length;
     }
@@ -25,7 +25,7 @@ int compress(void* destination_buf, unsigned long destination_buf_length,
 *   Return: 
 *   Success: Length of the output buffer
 */
-int decompress(void* destination_buf, unsigned long destination_buf_length,
+int passf_decompress(void* destination_buf, unsigned long destination_buf_length,
     void* source_buf,unsigned long nbytes){
 
         memcpy(destination_buf, source_buf, nbytes);
