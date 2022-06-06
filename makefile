@@ -3,7 +3,7 @@ CC:= gcc
 OBJDIR = build
 DISTDIR = dist
 
-CFLAGS:= -Wall -fPIC -g -O0
+CFLAGS:= -Wall -fPIC -g -O0 --std=gnu89
 
 # You only need these if you installed hdf5 somewhere seperate.
 # If your hdf5 is installed normally, remove the following three lines,
