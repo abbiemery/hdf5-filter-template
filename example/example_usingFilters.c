@@ -31,7 +31,6 @@ int main (void)
 {
     hid_t           file, space, dset, dcpl;    /* Handles */
     herr_t          status;
-    htri_t          avail;
     H5Z_filter_t    filter_type;
     hsize_t         dims[2] = {DIM0, DIM1},
                     chunk[2] = {CHUNK0, CHUNK1};
@@ -142,7 +141,7 @@ int main (void)
     maxr = rdata[0][0];
     for (i=0; i<DIM0; i++) {
         for (j=0; j<DIM1; j++)  {
-            printf ("%d %d \n", wdata[i][j], rdata[i][j], maxr);
+            printf ("%d %d \n", wdata[i][j], rdata[i][j]);
             if (maxr < rdata[i][j])
                 maxr = rdata[i][j];
         }
